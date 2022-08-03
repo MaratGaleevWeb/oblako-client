@@ -1,0 +1,20 @@
+<form [formGroup]="form" class="temp">
+  <h4 class="mat-title">{{ category.title }}</h4>
+  <mat-divider></mat-divider>
+  <mat-list role="list">
+    <mat-list-item
+      role="listitem"
+      *ngFor="let todo of checkboxes.controls; let i = index"
+      formArrayName="checkboxes"
+    >
+      <mat-checkbox
+        #checkbox
+        [formControlName]="i"
+        [ngClass]="{ checked: checkbox.checked }"
+        (change)="checkHandler(category.todos[i])"
+      >
+        {{ category.todos[i].text }}
+      </mat-checkbox>
+    </mat-list-item>
+  </mat-list>
+</form>

@@ -1,0 +1,49 @@
+<h1 mat-dialog-title>Новая задача</h1>
+<div mat-dialog-content>
+  <mat-form-field appearance="fill" style="width: 100%">
+    <mat-label>Название задачи</mat-label>
+    <input matInput [(ngModel)]="data.todo" />
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" style="width: 100%">
+    <mat-label>Выберите категорию</mat-label>
+    <mat-select [(ngModel)]="selectedCategory" name="category">
+      <mat-option
+        *ngFor="let category of data.categories"
+        [value]="category.title"
+      >
+        {{ category.title }}
+      </mat-option>
+      <mat-option value="Новая категория">Новая категория</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+
+<mat-form-field
+  *ngIf="selectedCategory === 'Новая категория'"
+  appearance="fill"
+  style="width: 100%"
+>
+  <mat-label>Название категории</mat-label>
+  <input matInput [(ngModel)]="ownCategory" />
+</mat-form-field>
+
+<div mat-dialog-actions>
+  <button
+    cdkFocusInitial
+    mat-button
+    mat-dialog-close
+    color="primary"
+    [mat-dialog-close]="{
+      todo: data.todo,
+      category:
+        selectedCategory === 'Новая категория' ? ownCategory : selectedCategory
+    }"
+  >
+    ОК
+  </button>
+
+  <button mat-button mat-dialog-close color="warn" (click)="onNoClick()">
+    ОТМЕНА
+  </button>
+</div>
